@@ -1,7 +1,24 @@
 #!/usr/bin/env python
 import requests
+import optparse
+import argparse
 
-traget_page = "[URL in action]"
+def get_args():
+    try:
+        parser = optparse.OptionParser()
+        parser.add_option("-t", "--target", dest="target_website", help="Target website example.com")
+        value, options = parser.parse_args()
+    except:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-t", "--target", dest="target_website", help="Target website example.com")
+        value = parser.parse_args()
+    if not value.target_website:
+        parser.error("[-] ERROR Missing argument, use --help or more info")
+    else:
+        return value
+
+value = get_args()
+traget_page = value.target_website
 try_data= {"username":"", "password":"", "login":"submit"}
 
 with open("uname.txt", "r") as unamefile:
